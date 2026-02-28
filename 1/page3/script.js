@@ -139,4 +139,3 @@ document.getElementById("task2Btn")?.addEventListener("click", task2);
 document.getElementById("task3Btn")?.addEventListener("click", task3);
 document.getElementById("task4Btn")?.addEventListener("click", task4);
 document.getElementById("task5Btn")?.addEventListener("click", task5);
-
