@@ -203,38 +203,39 @@ function task1() {
     alert(`Текущее количество загрузок страницы: ${count}`);
 }
 
-async function task2() {
+function task2() {
     const output = getTaskContainer("task2-block", "Задание 2. Promise по порядку");
-    const urls = await getImageUrls();
 
-    if (urls === null) {
-        return;
-    }
+    getImageUrls().then((urls) => {
+        if (urls === null) {
+            return;
+        }
 
-    output.innerHTML = "";
+        output.innerHTML = "";
 
-    const promises = urls.map((url) =>
-        loadImage(url).catch(() => createErrorParagraph())
-    );
-
-    const elements = await Promise.all(promises);
-    elements.forEach((element) => output.appendChild(element));
+        Promise.all(
+            urls.map((url) => loadImage(url).catch(() => createErrorParagraph()))
+        ).then((elements) => {
+            elements.forEach((element) => output.appendChild(element));
+        });
+    });
 }
 
-async function task3() {
+function task3() {
     const output = getTaskContainer("task3-block", "Задание 3. Promise без порядка");
-    const urls = await getImageUrls();
 
-    if (urls === null) {
-        return;
-    }
+    getImageUrls().then((urls) => {
+        if (urls === null) {
+            return;
+        }
 
-    output.innerHTML = "";
+        output.innerHTML = "";
 
-    urls.forEach((url) => {
-        loadImage(url)
-            .then((img) => output.appendChild(img))
-            .catch(() => output.appendChild(createErrorParagraph()));
+        urls.forEach((url) => {
+            loadImage(url)
+                .then((img) => output.appendChild(img))
+                .catch(() => output.appendChild(createErrorParagraph()));
+        });
     });
 }
 
@@ -248,17 +249,14 @@ async function task4_ordered() {
 
     output.innerHTML = "";
 
-    const elements = await Promise.all(
-        urls.map(async (url) => {
-            try {
-                return await loadImage(url);
-            } catch {
-                return createErrorParagraph();
-            }
-        })
-    );
-
-    elements.forEach((element) => output.appendChild(element));
+    for (const url of urls) {
+        try {
+            const img = await loadImage(url);
+            output.appendChild(img);
+        } catch {
+            output.appendChild(createErrorParagraph());
+        }
+    }
 }
 
 async function task4_unordered() {
