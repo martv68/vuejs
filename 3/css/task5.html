@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 5</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .hint {
+            padding: 24px;
+            font-size: 24px;
+        }
+
+        .circle {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: blue;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="circle" class="circle"></div>
+
+    <script>
+        const circle = document.getElementById("circle");
+
+        document.addEventListener("mousemove", (event) => {
+            circle.style.left = event.clientX + "px";
+            circle.style.top = event.clientY + "px";
+        });
+    </script>
+</body>
+</html>

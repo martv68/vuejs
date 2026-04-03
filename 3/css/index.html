@@ -3,42 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 7 - CSS</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>CSS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 24px;
+            font-family: Arial, sans-serif;
+            line-height: 1.55;
+            font-size: 20px;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 24px;
+            padding: 20px;
+            border: 1px solid #cccccc;
+        }
+
+        h1,
+        h2 {
+            margin-top: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 24px;
+        }
+
+        li + li {
+            margin-top: 10px;
+        }
+
+        a {
+            color: #0a58ca;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header class="block">
-            <h1>Лабораторная работа 7</h1>
-            <p>Пример простой страницы с оформлением на CSS.</p>
-        </header>
-
-        <section class="block">
-            <h2>Информация о товаре</h2>
-            <div class="product-card">
-                <h3>Письменный набор</h3>
-                <p>Набор для учебы и работы.</p>
-                <p>Старая цена: <span class="old-price">1000 ₽</span></p>
-                <p>Новая цена: <span class="new-price">500 ₽</span></p>
-            </div>
-        </section>
-
-        <section class="block">
-            <h2>Список преимуществ</h2>
-            <ul class="feature-list">
-                <li>Простая структура страницы</li>
-                <li>Оформление текста и блока товара</li>
-                <li>Кнопка с hover-эффектом</li>
+    <div class="page">
+        <section>
+            <h2>Страницы по заданиям</h2>
+            <ul>
+                <li><a href="task1.html">Задание 1</a> - страница по образцу.</li>
+                <li><a href="task2.html">Задание 2</a> - Desktop / Tablet / Mobile.</li>
+                <li><a href="task3.html">Задание 3</a> - верхнее меню, остающееся на месте при прокрутке.</li>
+                <li><a href="task4.html">Задание 4</a> - div, превращенный в синий круг радиусом 30px.</li>
+                <li><a href="task5.html">Задание 5</a> - круг, двигающийся за курсором.</li>
+                <li><a href="task6.html">Задание 6</a> - верстка по шаблону.</li>
             </ul>
-        </section>
-
-        <section class="block">
-            <h2>Форма</h2>
-            <form class="form">
-                <label for="email">Email:</label>
-                <input id="email" type="email" placeholder="name@example.com">
-                <button type="button">Отправить</button>
-            </form>
         </section>
     </div>
 </body>
