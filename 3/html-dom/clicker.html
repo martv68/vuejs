@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кликер</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 24px;
+            font-family: Arial, sans-serif;
+            line-height: 1.55;
+            font-size: 20px;
+        }
+
+        .page {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin-bottom: 24px;
+            padding: 20px;
+            border: 1px solid #cccccc;
+        }
+
+        h1,
+        h2 {
+            margin-top: 0;
+        }
+
+        h1 {
+            font-size: 34px;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .value {
+            margin: 10px 0;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .speed {
+            font-size: 26px;
+        }
+
+        button {
+            margin: 4px;
+            padding: 10px 14px;
+            min-width: 80px;
+            font: inherit;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <h1>Кликер</h1>
+
+        <section>
+            <h2>Кликер со средним количеством кликов за 5 секунд</h2>
+            <p>Общий счётчик сохраняется после перезагрузки страницы, а счётчик сессии работает до обновления вкладки.</p>
+            <div class="value">Всего кликов: <span id="total-count">0</span></div>
+            <div>Клики за сессию: <span id="session-count">0</span></div>
+            <div class="value speed">Среднее за 5 секунд: <span id="average-value">0</span> кликов/с</div>
+            <button id="click-button" type="button">Клик</button>
+        </section>
+    </div>
+
+    <script>
+        const storageKey = "html-dom-clicker-state";
+        const totalCountElement = document.getElementById("total-count");
+        const sessionCountElement = document.getElementById("session-count");
+        const averageValueElement = document.getElementById("average-value");
+        const clickButton = document.getElementById("click-button");
+
+        let totalClicks = 0;
+        let sessionClicks = 0;
+        const testDuration = 5000;
+        let recentClicks = [];
+
+        function saveState() {
+            localStorage.setItem(storageKey, JSON.stringify({
+                totalClicks: totalClicks
+            }));
+        }
+
+        function loadState() {
+            const rawState = localStorage.getItem(storageKey);
+
+            if (!rawState) {
+                return;
+            }
+
+            try {
+                const state = JSON.parse(rawState);
+                totalClicks = Number(state.totalClicks) || 0;
+            } catch (error) {
+                totalClicks = 0;
+            }
+        }
+
+        function clearOldClicks() {
+            const now = Date.now();
+            recentClicks = recentClicks.filter((time) => now - time <= testDuration);
+        }
+
+        function renderClicker() {
+            clearOldClicks();
+            totalCountElement.textContent = String(totalClicks);
+            sessionCountElement.textContent = String(sessionClicks);
+            averageValueElement.textContent = (recentClicks.length / 5).toFixed(2);
+        }
+
+        clickButton.addEventListener("click", () => {
+            sessionClicks += 1;
+            totalClicks += 1;
+            recentClicks.push(Date.now());
+            renderClicker();
+            saveState();
+        });
+
+        loadState();
+        renderClicker();
+        setInterval(renderClicker, 200);
+    </script>
+</body>
+</html>

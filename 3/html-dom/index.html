@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 6 - HTML Basics, DOM API</title>
+    <title>HTML Basics, DOM API</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             margin: 0;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            line-height: 1.4;
+            padding: 24px;
+            font-family: "Times New Roman", serif;
+            line-height: 1.55;
+            font-size: 20px;
         }
 
         body.protection-enabled {
             user-select: none;
         }
 
+        .page {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
         section {
             margin-bottom: 24px;
-            padding: 16px;
+            padding: 20px;
             border: 1px solid #cccccc;
         }
 
         h1,
-        h2 {
+        h2,
+        h3 {
             margin-top: 0;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 18px;
         }
 
         .old-price {
@@ -36,113 +44,570 @@
         }
 
         .new-price {
-            color: red;
-            font-weight: bold;
+            color: black;
         }
 
-        .actions {
+        .task-one-title {
+            margin-bottom: 18px;
+            font-size: 32px;
+        }
+
+        .task-one-intro {
+            margin-bottom: 18px;
+            font-size: 23px;
+        }
+
+        .task-one-formula {
+            margin-bottom: 18px;
+            font-size: 28px;
+        }
+
+        .price-table {
+            width: 100%;
+            max-width: 580px;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .price-table td {
+            border: 1px solid #000000;
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+
+        .status,
+        .controls,
+        .rpn-actions {
             margin: 12px 0;
+        }
+
+        .status {
+            font-size: 22px;
         }
 
         button {
             margin: 4px;
-            padding: 8px 12px;
+            padding: 10px 12px;
+            min-width: 72px;
+            font: inherit;
+            font-size: 20px;
             cursor: pointer;
         }
 
-        .status {
-            margin: 0 0 12px;
-        }
-
-        .log {
-            min-height: 120px;
-            padding: 10px;
-            border: 1px solid #cccccc;
-            background: #f5f5f5;
-            white-space: pre-wrap;
-        }
-
-        .display {
+        .screen {
             margin-bottom: 12px;
             padding: 12px;
             border: 1px solid #cccccc;
-            background: #f5f5f5;
-            font-size: 28px;
+            font-size: 26px;
             text-align: right;
+            min-height: 58px;
+            width: 304px;
+            overflow: hidden;
+            overflow-wrap: anywhere;
         }
 
         .keys {
             display: grid;
             grid-template-columns: repeat(4, 70px);
             gap: 8px;
+            width: max-content;
         }
 
         .key {
-            width: 70px;
-            height: 50px;
-            font-size: 18px;
+            height: 48px;
+            font-size: 20px;
+        }
+
+        .wide {
+            grid-column: span 2;
+        }
+
+        .expression-input {
+            width: 100%;
+            max-width: 520px;
+            padding: 8px;
+            margin-top: 8px;
+            font: inherit;
+            font-size: 20px;
+        }
+
+        .output-box {
+            margin-top: 12px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            max-width: 520px;
+        }
+
+        .result {
+            font-size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <section>
-        <h1>Лабораторная работа 6</h1>
-        <p>HTML Basics, DOM API</p>
-    </section>
+    <div class="page">
+        <section>
+            <h2>Базовая HTML-страница</h2>
+            <h1 class="task-one-title">Добро пожаловать!</h1>
+            <p class="task-one-intro"><i>Приветствуем</i> <u>вас</u> в <b>нашем</b> <a href="http://example.com" target="_blank" rel="noreferrer">магазине</a>!</p>
+            <p class="task-one-formula">&lt;h1&gt;Теорема Пифагора&lt;/h1&gt;: <i>c</i><sup>2</sup> = <i>a</i><sup>2</sup> + <i>b</i><sup>2</sup></p>
 
-    <section>
-        <h2>1. Базовая HTML-страница</h2>
-        <h1>Добро пожаловать!</h1>
-        <p>Приветствуем вас в нашем магазине!</p>
+            <table class="price-table">
+                <tr>
+                    <td colspan="2">Информация</td>
+                </tr>
+                <tr>
+                    <td>Старая цена: <span class="old-price">1000 ₽</span></td>
+                    <td>Новая цена: <span class="new-price">500 ₽</span></td>
+                </tr>
+            </table>
+        </section>
 
-        <h2>Теорема Пифагора</h2>
-        <p>c<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup></p>
+        <section>
+            <h2>DOM API: защита страницы</h2>
+            <p id="protection-status" class="status">Статус: защита выключена.</p>
+            <div class="controls">
+                <button id="enable-protection" type="button">Включить защиту</button>
+                <button id="disable-protection" type="button" class="secondary">Выключить защиту</button>
+            </div>
+        </section>
 
-        <h2>Информация о товаре</h2>
-        <p>Старая цена: <span class="old-price">1000 ₽</span></p>
-        <p>Новая цена: <span class="new-price">500 ₽</span></p>
-    </section>
+        <section>
+            <h2>Обычный калькулятор</h2>
+            <div id="basic-display" class="screen">0</div>
+            <div id="basic-keys" class="keys">
+                <button class="key wide" type="button" data-basic-action="clear">C</button>
+                <button class="key" type="button" data-basic-value="/">/</button>
+                <button class="key" type="button" data-basic-value="*">*</button>
 
-    <section>
-        <h2>2. DOM API: защита страницы</h2>
-        <p id="protection-status" class="status">Статус: защита выключена.</p>
+                <button class="key" type="button" data-basic-value="7">7</button>
+                <button class="key" type="button" data-basic-value="8">8</button>
+                <button class="key" type="button" data-basic-value="9">9</button>
+                <button class="key" type="button" data-basic-value="-">-</button>
 
-        <div class="actions">
-            <button id="enable-protection" type="button">Включить защиту</button>
-            <button id="disable-protection" type="button">Выключить защиту</button>
-            <button id="clear-log" type="button">Очистить лог</button>
-        </div>
+                <button class="key" type="button" data-basic-value="4">4</button>
+                <button class="key" type="button" data-basic-value="5">5</button>
+                <button class="key" type="button" data-basic-value="6">6</button>
+                <button class="key" type="button" data-basic-value="+">+</button>
 
-        <pre id="event-log" class="log">[Ожидание действий пользователя]</pre>
-    </section>
+                <button class="key" type="button" data-basic-value="1">1</button>
+                <button class="key" type="button" data-basic-value="2">2</button>
+                <button class="key" type="button" data-basic-value="3">3</button>
+                <button class="key" type="button" data-basic-action="equals">=</button>
 
-    <section>
-        <h2>3. Калькулятор</h2>
-        <div id="calc-display" class="display">0</div>
+                <button class="key wide" type="button" data-basic-value="0">0</button>
+                <button class="key" type="button" data-basic-value=".">.</button>
+            </div>
+        </section>
 
-        <div id="calc-keys" class="keys">
-            <button class="key" data-value="7" type="button">7</button>
-            <button class="key" data-value="8" type="button">8</button>
-            <button class="key" data-value="9" type="button">9</button>
-            <button class="key" data-value="/" type="button">/</button>
+        <section>
+            <h2>Калькулятор со скобками и ОПЗ</h2>
+            <label for="expression-input"><strong>Введите выражение:</strong></label>
+            <input
+                id="expression-input"
+                class="expression-input"
+                type="text"
+                value="(2 + 3) * 4 - 5 / 5"
+                placeholder="Например: (2 + 3) * 4 - 5 / 5"
+            >
 
-            <button class="key" data-value="4" type="button">4</button>
-            <button class="key" data-value="5" type="button">5</button>
-            <button class="key" data-value="6" type="button">6</button>
-            <button class="key" data-value="*" type="button">*</button>
+            <div class="rpn-actions">
+                <button id="calc-expression" type="button">Вычислить</button>
+                <button id="clear-expression" type="button">Очистить</button>
+            </div>
 
-            <button class="key" data-value="1" type="button">1</button>
-            <button class="key" data-value="2" type="button">2</button>
-            <button class="key" data-value="3" type="button">3</button>
-            <button class="key" data-value="-" type="button">-</button>
+            <div class="output-box">
+                <p><strong>Обратная польская запись:</strong></p>
+                <div id="rpn-output">—</div>
+            </div>
 
-            <button class="key" data-value="0" type="button">0</button>
-            <button class="key" data-action="clear" type="button">C</button>
-            <button class="key" data-action="equals" type="button">=</button>
-            <button class="key" data-value="+" type="button">+</button>
-        </div>
-    </section>
+            <div class="output-box">
+                <p><strong>Результат:</strong></p>
+                <div id="expression-result" class="result">—</div>
+            </div>
+        </section>
+    </div>
 
-    <script src="script.js" defer></script>
+    <script>
+        const statusElement = document.getElementById("protection-status");
+        const enableProtectionButton = document.getElementById("enable-protection");
+        const disableProtectionButton = document.getElementById("disable-protection");
+
+        let protectionEnabled = false;
+
+        function renderProtectionState() {
+            if (protectionEnabled) {
+                statusElement.textContent = "Статус: защита включена.";
+                statusElement.classList.add("is-active");
+                document.body.classList.add("protection-enabled");
+            } else {
+                statusElement.textContent = "Статус: защита выключена.";
+                statusElement.classList.remove("is-active");
+                document.body.classList.remove("protection-enabled");
+            }
+        }
+
+        function blockEvent(event, message) {
+            if (!protectionEnabled) {
+                return;
+            }
+
+            event.preventDefault();
+        }
+
+        function handleKeyBlock(event) {
+            if (!protectionEnabled) {
+                return;
+            }
+
+            const key = event.key.toLowerCase();
+            const ctrlAction = (event.ctrlKey || event.metaKey) && ["c", "u", "s", "p", "a"].includes(key);
+
+            if (ctrlAction || key === "f12") {
+                event.preventDefault();
+            }
+        }
+
+        enableProtectionButton.addEventListener("click", () => {
+            protectionEnabled = true;
+            renderProtectionState();
+        });
+
+        disableProtectionButton.addEventListener("click", () => {
+            protectionEnabled = false;
+            renderProtectionState();
+        });
+
+        document.addEventListener("contextmenu", (event) => {
+            blockEvent(event, "Контекстное меню заблокировано.");
+        });
+
+        document.addEventListener("copy", (event) => {
+            blockEvent(event, "Копирование заблокировано.");
+        });
+
+        document.addEventListener("cut", (event) => {
+            blockEvent(event, "Вырезание заблокировано.");
+        });
+
+        document.addEventListener("dragstart", (event) => {
+            blockEvent(event, "Перетаскивание заблокировано.");
+        });
+
+        document.addEventListener("selectstart", (event) => {
+            blockEvent(event, "Выделение текста заблокировано.");
+        });
+
+        document.addEventListener("keydown", handleKeyBlock);
+
+        const basicDisplay = document.getElementById("basic-display");
+        const basicKeys = document.getElementById("basic-keys");
+
+        let basicCurrent = "0";
+        let basicStored = null;
+        let basicOperator = null;
+        let basicWaitNext = false;
+
+        function renderBasicDisplay() {
+            basicDisplay.textContent = basicCurrent;
+        }
+
+        function clearBasicCalculator() {
+            basicCurrent = "0";
+            basicStored = null;
+            basicOperator = null;
+            basicWaitNext = false;
+            renderBasicDisplay();
+        }
+
+        function applyBasicOperation(left, right, operator) {
+            if (operator === "+") {
+                return left + right;
+            }
+
+            if (operator === "-") {
+                return left - right;
+            }
+
+            if (operator === "*") {
+                return left * right;
+            }
+
+            if (operator === "/") {
+                return right === 0 ? "Ошибка" : left / right;
+            }
+
+            return right;
+        }
+
+        function inputBasicDigit(value) {
+            if (basicWaitNext) {
+                basicCurrent = value === "." ? "0." : value;
+                basicWaitNext = false;
+                renderBasicDisplay();
+                return;
+            }
+
+            if (value === "." && basicCurrent.includes(".")) {
+                return;
+            }
+
+            if (basicCurrent === "0" && value !== ".") {
+                basicCurrent = value;
+            } else {
+                basicCurrent += value;
+            }
+
+            renderBasicDisplay();
+        }
+
+        function chooseBasicOperator(operator) {
+            if (basicCurrent === "Ошибка") {
+                clearBasicCalculator();
+            }
+
+            const numericCurrent = Number(basicCurrent);
+
+            if (basicStored === null) {
+                basicStored = numericCurrent;
+            } else if (basicOperator !== null && !basicWaitNext) {
+                const result = applyBasicOperation(basicStored, numericCurrent, basicOperator);
+                basicStored = result === "Ошибка" ? null : result;
+                basicCurrent = String(result);
+                renderBasicDisplay();
+            }
+
+            basicOperator = operator;
+            basicWaitNext = true;
+        }
+
+        function calculateBasicResult() {
+            if (basicStored === null || basicOperator === null || basicWaitNext) {
+                return;
+            }
+
+            const result = applyBasicOperation(basicStored, Number(basicCurrent), basicOperator);
+            basicCurrent = String(result);
+            basicStored = null;
+            basicOperator = null;
+            basicWaitNext = true;
+            renderBasicDisplay();
+        }
+
+        basicKeys.addEventListener("click", (event) => {
+            const button = event.target.closest("button");
+
+            if (!button) {
+                return;
+            }
+
+            if (button.dataset.basicAction === "clear") {
+                clearBasicCalculator();
+                return;
+            }
+
+            if (button.dataset.basicAction === "equals") {
+                calculateBasicResult();
+                return;
+            }
+
+            const value = button.dataset.basicValue;
+
+            if (!value) {
+                return;
+            }
+
+            if (/[0-9.]/.test(value)) {
+                inputBasicDigit(value);
+                return;
+            }
+
+            chooseBasicOperator(value);
+        });
+
+        const expressionInput = document.getElementById("expression-input");
+        const rpnOutput = document.getElementById("rpn-output");
+        const expressionResult = document.getElementById("expression-result");
+        const calculateExpressionButton = document.getElementById("calc-expression");
+        const clearExpressionButton = document.getElementById("clear-expression");
+
+        function tokenizeExpression(expression) {
+            const tokens = [];
+            let index = 0;
+
+            while (index < expression.length) {
+                const char = expression[index];
+
+                if (char === " ") {
+                    index += 1;
+                    continue;
+                }
+
+                const previousToken = tokens.length > 0 ? tokens[tokens.length - 1] : null;
+                const unaryMinus = char === "-" && (previousToken === null || ["+", "-", "*", "/", "("].includes(previousToken));
+
+                if (/\d|\./.test(char) || unaryMinus) {
+                    let number = unaryMinus ? "-" : "";
+
+                    if (unaryMinus) {
+                        index += 1;
+                    }
+
+                    while (index < expression.length && /[\d.]/.test(expression[index])) {
+                        number += expression[index];
+                        index += 1;
+                    }
+
+                    if (number === "-" || number.split(".").length > 2) {
+                        throw new Error("Некорректное число в выражении.");
+                    }
+
+                    tokens.push(number);
+                    continue;
+                }
+
+                if ("+-*/()".includes(char)) {
+                    tokens.push(char);
+                    index += 1;
+                    continue;
+                }
+
+                throw new Error("Недопустимый символ: " + char);
+            }
+
+            return tokens;
+        }
+
+        function toPostfix(tokens) {
+            const output = [];
+            const operators = [];
+            const priority = { "+": 1, "-": 1, "*": 2, "/": 2 };
+
+            tokens.forEach((token) => {
+                if (!Number.isNaN(Number(token))) {
+                    output.push(token);
+                    return;
+                }
+
+                if (token === "(") {
+                    operators.push(token);
+                    return;
+                }
+
+                if (token === ")") {
+                    while (operators.length > 0 && operators[operators.length - 1] !== "(") {
+                        output.push(operators.pop());
+                    }
+
+                    if (operators.length === 0) {
+                        throw new Error("Скобки расставлены неверно.");
+                    }
+
+                    operators.pop();
+                    return;
+                }
+
+                while (
+                    operators.length > 0 &&
+                    operators[operators.length - 1] !== "(" &&
+                    priority[operators[operators.length - 1]] >= priority[token]
+                ) {
+                    output.push(operators.pop());
+                }
+
+                operators.push(token);
+            });
+
+            while (operators.length > 0) {
+                const operator = operators.pop();
+
+                if (operator === "(") {
+                    throw new Error("Скобки расставлены неверно.");
+                }
+
+                output.push(operator);
+            }
+
+            return output;
+        }
+
+        function evaluatePostfix(postfix) {
+            const stack = [];
+
+            postfix.forEach((token) => {
+                if (!Number.isNaN(Number(token))) {
+                    stack.push(Number(token));
+                    return;
+                }
+
+                if (stack.length < 2) {
+                    throw new Error("Недостаточно данных для вычисления.");
+                }
+
+                const right = stack.pop();
+                const left = stack.pop();
+
+                if (token === "+") {
+                    stack.push(left + right);
+                    return;
+                }
+
+                if (token === "-") {
+                    stack.push(left - right);
+                    return;
+                }
+
+                if (token === "*") {
+                    stack.push(left * right);
+                    return;
+                }
+
+                if (token === "/") {
+                    if (right === 0) {
+                        throw new Error("Деление на ноль невозможно.");
+                    }
+
+                    stack.push(left / right);
+                }
+            });
+
+            if (stack.length !== 1) {
+                throw new Error("Выражение введено некорректно.");
+            }
+
+            return stack[0];
+        }
+
+        function calculateExpression() {
+            try {
+                const tokens = tokenizeExpression(expressionInput.value.trim());
+
+                if (tokens.length === 0) {
+                    throw new Error("Введите выражение.");
+                }
+
+                const postfix = toPostfix(tokens);
+                const result = evaluatePostfix(postfix);
+
+                rpnOutput.textContent = postfix.join(" ");
+                expressionResult.textContent = String(result);
+            } catch (error) {
+                rpnOutput.textContent = "Ошибка";
+                expressionResult.textContent = error.message;
+            }
+        }
+
+        calculateExpressionButton.addEventListener("click", calculateExpression);
+
+        clearExpressionButton.addEventListener("click", () => {
+            expressionInput.value = "";
+            rpnOutput.textContent = "—";
+            expressionResult.textContent = "—";
+        });
+
+        renderProtectionState();
+        renderBasicDisplay();
+        calculateExpression();
+    </script>
 </body>
 </html>
