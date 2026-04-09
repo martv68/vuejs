@@ -1,0 +1,66 @@
+=block
+  background: #eeeeee
+
+body
+  margin: 0
+  padding: 36px 24px
+  font-family: Arial
+  background: #ffffff
+
+.page
+  max-width: 920px
+  margin: 0 auto
+
+  .logo
+    text-align: center
+    font-size: 28px
+    font-weight: bold
+    margin-bottom: 18px
+
+  .menu
+    +block
+    padding: 12px 16px
+    text-align: center
+    margin-bottom: 14px
+
+    a
+      margin: 0 8px
+      color: #7c5ea8
+      font-size: 12px
+      text-decoration: underline
+
+  .hero
+    +block
+    min-height: 150px
+    margin-bottom: 14px
+    display: flex
+    align-items: flex-start
+    justify-content: center
+    padding-top: 18px
+    font-size: 14px
+
+  .cards
+    display: flex
+    gap: 14px
+    margin-bottom: 14px
+
+    .card
+      +block
+      flex: 1
+      min-height: 120px
+      display: flex
+      align-items: flex-start
+      justify-content: center
+      padding-top: 16px
+      font-size: 14px
+
+  .footer
+    +block
+    text-align: center
+    padding: 16px
+    font-size: 14px
+
+@media (max-width: 700px)
+  .page
+    .cards
+      flex-direction: column

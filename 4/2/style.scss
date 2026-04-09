@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+@for $i from 1 through 100 {
+  .num-#{$i} {
+    color: rgb($i, 256 - $i, 0);
+  }
+}
