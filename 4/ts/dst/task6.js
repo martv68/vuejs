@@ -53,7 +53,6 @@ class ConsoleLogger {
         console.log(`[Logger] Получено событие: ${message}`);
     }
 }
-// ==================== ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ ====================
 console.log("\n--- ADAPTER ---");
 const oldSystem = new Adaptee();
 const adapter = new Adapter(oldSystem);

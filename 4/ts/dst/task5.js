@@ -55,15 +55,13 @@ class BinarySearchTree {
             node.right = this._deleteNode(node.right, value);
         }
         else {
-            // Найдена удаляемая нода
             if (node.left === null && node.right === null)
                 return null;
             if (node.left === null)
                 return node.right;
             if (node.right === null)
                 return node.left;
-            // У ноды два потомка: берём минимум из правого поддерева
-            const minRightNode = node.right; // гарантированно не null благодаря проверке выше
+            const minRightNode = node.right;
             const minValue = this._findMin(minRightNode).value;
             node.value = minValue;
             node.right = this._deleteNode(node.right, minValue);
@@ -95,12 +93,11 @@ class BinarySearchTree {
         return 1 + Math.max(leftH, rightH);
     }
 }
-// Пример использования
 const bst = new BinarySearchTree();
 [10, 5, 15, 3, 7].forEach(v => bst.insert(v));
-console.log("Height:", bst.getHeight()); // 3
-console.log("Search 7:", bst.search(7)); // true
+console.log("Height:", bst.getHeight());
+console.log("Search 7:", bst.search(7));
 bst.delete(5);
-console.log("Search 5 after delete:", bst.search(5)); // false
+console.log("Search 5 after delete:", bst.search(5));
 bst.update(15, 20);
-console.log("Search 20 after update:", bst.search(20)); // true
+console.log("Search 20 after update:", bst.search(20));
