@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="module">
+  import axios from 'https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/esm/axios.min.js';
+
+  axios.get('https://vk.com')
+    .then(res => console.log('Статус:', res.status))
+    .catch(err => {
+      if (err.request) {
+        console.error('CORS блокировка:', err.message);
+      }
+    });
+
+  // В браузере завершится ошибкой CORS:
+  // VK не возвращает заголовок Access-Control-Allow-Origin,
+  // поэтому браузер блокирует доступ к ответу
+</script>
+</body>
+</html>

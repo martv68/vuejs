@@ -7,6 +7,11 @@
   axios.get('https://json.geoiplookup.io/')
     .then(res => console.log('OK:', res.status))
     .catch(err => console.error('Ошибка:', err.message));
+
+  // GET запрос к geoiplookup.io
+  // В отличие от vk.com, этот сервис возвращает заголовок:
+  // Access-Control-Allow-Origin: *
+  // Это означает, что любой сайт может читать ответ — CORS разрешён
 </script>
 </body>
 </html>

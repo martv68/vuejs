@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import Clicker from './components/Clicker.vue';
+import Clicker from './Clicker.vue';
 
 function handleClickerEvent(n) {
   alert(`Clicker ${n} clicked!`);
