@@ -8,6 +8,9 @@ class Adaptee {
   }
 }
 
+
+
+
 class Adapter implements Target {
   private adaptee: Adaptee;
   constructor(adaptee: Adaptee) {
@@ -44,6 +47,9 @@ class ShoppingCart {
   }
 }
 
+
+
+
 interface Observer {
   update(message: string): void;
 }
@@ -71,6 +77,9 @@ class ConsoleLogger implements Observer {
     console.log(`[Logger] Получено событие: ${message}`);
   }
 }
+
+
+
 
 console.log("\n--- ADAPTER ---");
 const oldSystem = new Adaptee();

@@ -90,12 +90,3 @@ class BinarySearchTree {
     return 1 + Math.max(leftH, rightH);
   }
 }
-
-const bst = new BinarySearchTree();
-[10, 5, 15, 3, 7].forEach(v => bst.insert(v));
-console.log("Height:", bst.getHeight());
-console.log("Search 7:", bst.search(7));
-bst.delete(5);
-console.log("Search 5 after delete:", bst.search(5));
-bst.update(15, 20);
-console.log("Search 20 after update:", bst.search(20));
