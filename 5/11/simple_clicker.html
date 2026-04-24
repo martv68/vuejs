@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue Clicker</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app">
+  <h2>Очки: {{ count }}</h2>
+  <button @click="count++">Клик</button>
+</div>
+
+<script>
+  const { createApp, ref } = Vue;
+
+  createApp({
+    setup() {
+      const count = ref(0);
+      return { count };
+    }
+  }).mount('#app');
+</script>
+</body>
+</html>

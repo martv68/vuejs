@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="module">
+  import axios from 'https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/esm/axios.min.js';
+
+  axios.get('https://json.geoiplookup.io/')
+    .then(res => console.log('OK:', res.status))
+    .catch(err => console.error('Ошибка:', err.message));
+</script>
+</body>
+</html>

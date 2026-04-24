@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PixiJS Rotation</title>
+</head>
+<body>
+<script type="module">
+  import * as PIXI from 'https://cdn.jsdelivr.net/npm/pixi.js@7/dist/pixi.mjs';
+
+  const app = new PIXI.Application({
+    width: 400,
+    height: 400,
+    backgroundColor: 0x1099bb,
+  });
+  document.body.appendChild(app.view);
+
+  const rect = new PIXI.Graphics();
+  rect.beginFill(0xff0000);
+  rect.drawRect(-50, -30, 100, 60);
+  rect.endFill();
+
+  rect.x = 200;
+  rect.y = 200;
+  app.stage.addChild(rect);
+
+  app.ticker.add(() => {
+    rect.rotation += 0.02;
+  });
+</script>
+</body>
+</html>
